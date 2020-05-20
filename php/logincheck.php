@@ -1,5 +1,5 @@
 <?php
-	
+
 	session_start();
 
 	include('../service/functions.php');
@@ -11,25 +11,34 @@
 
 		$email = $_POST['email'];
 		$password = $_POST['password'];
-			
-		$user = validateLogin($email, $password);                                      //associative array
+		$user = validateLogin($email, $password);                                      //associatarray
 
-		if(count($user) > 0 ){
-			$_SESSION['user'] = $user;                                                 //user SESSION created
-			//$type = getUserType($_SESSION['user']['user_id']);
 
-			if($_SESSION['user']['type'] == "guest"){
-				header("location: ../views/guest_home.php");
-			}else if($_SESSION['user']['type'] == "manager"){
-				header("location: ../views/manager/manager_home.php");
-			}elseif ($_SESSION['user']['type'] == "chef") {
-				header("location: ../views/chef_home.php");
-			}
 
+		if(is_null($user)){
+			echo "invalid username/password";
 		}else{
-			echo "Invalid Email/Password!";
 
+			if(count($user) > 0 ){
+				$_SESSION['user'] = $user;                                                 //user SESSION created
+				//$type = getUserType($_SESSION['user']['user_id']);
+
+				if($_SESSION['user']['type'] == "guest"){
+					$_SESSION['uname']=$email;
+					header("location: ../views/guest/reserve.php");
+				}else if($_SESSION['user']['type'] == "manager"){
+					header("location: ../views/manager/manager_home.php");
+				}elseif ($_SESSION['user']['type'] == "chef") {
+					$_SESSION['uname']=$email;
+					header("location: ../views/chef/chef.php");
+
+				}
+
+			}else{
+				echo "Invalid Email/Password!";
+
+			}
 		}
-	}	
+	}
 
 ?>
