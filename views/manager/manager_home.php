@@ -3,7 +3,7 @@
 	include('../../service/functions.php');
 
 	if(!isset($_SESSION['user'])){  
-		header("location: index.html");
+		header("location: ../../index.html");
 	}
 
 	$_SESSION['manager'] = getManagerInfo($_SESSION['user']['user_id']);             //manager SESSION created
@@ -36,6 +36,7 @@
 							Guest Menu
 							<ul>
 							  <li><a href="guest_list.php">View Guest List</a></br></li>
+							  <li><a href="guest_list_pending.php">View Pending Guest List</a></br></li>
 							  <li><a href="guest_to_vip.php">Make a Guest VIP</a></br></li>
 							  <li><a href="guest_comp.php">View Guest Complaints & Queries</a></br></li>
 							  <li><a href="guest_service_req.php">Service Requests</a></br></li>
@@ -69,7 +70,7 @@
 					
 					<tr>
 						<td colspan="10" align="center">
-							<a href="logout.php">Logout</a></br>
+							<a href="../../php/manager_logout.php">Logout</a></br>
 						</td>
 					</tr>
 				</table>

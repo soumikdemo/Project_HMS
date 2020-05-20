@@ -1,8 +1,12 @@
 <?php	
 	session_start();
-	if(!isset($_COOKIE['usernameMan'])){  
-		header("location: manager_login.php");
-	} 
+	
+	if(!isset($_SESSION['user'])){  
+		header("location: ../../index.html");
+	}
+
+	require_once('../../service/functions.php');
+	$result = getChefListByManagerId($_SESSION['manager']['manager_id']);
 
 ?>
 
@@ -14,35 +18,35 @@
 </head>
 <body>
 		<form>
-			<fieldset style="width:500px">
-				<table border="1" align="center">
+			<fieldset style="width:100%">
+				<table border="0" align="center" cellspacing="40" cellpadding=”10″>
 					<tr>
-						<td colspan="3" align="center">
-						Chef List
+						<td colspan="9" align="center">
+						<h3>Chef List</h3>
 						</td>
 					</tr>
 					<tr>
-						<td>Username</td>
-						<td>Full Name</td>
-						<td>Contact No</td>
-					</tr>
-					<tr>
-						<td>Arik</td>
-						<td>
-							Fayaz Arik
-						</td>
-						<td>01702114444</td>
-					</tr>
-					<tr>
-						<td>Ramsey </td>
-						<td>
-							Gordon Ramsey
-						</td>
-						<td>01611002222</td>
+						<td>Chef ID </td>
+						<td>Name</td>
+						<td>Address</td>
+						<td>Email</td>
+						<td>Phone Number</td>
 					</tr>
 					
+					<?php	while($row = mysqli_fetch_assoc($result)){ ?>
+		
 					<tr>
-						<td colspan="3" align="center">
+						<td><?=$row['chef_id']?></td>
+						<td><?=$row['name']?></td>
+						<td><?=$row['address']?></td>
+						<td><?=$row['email']?></td>
+						<td><?=$row['phone_no']?></td>
+					</tr>
+				
+					<?php } ?>
+					
+					<tr>
+						<td colspan="5" align="center">
 							<a href="manager_home.php">Goto Homepage</a></br>
 						</td>
 					</tr>
